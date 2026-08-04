@@ -1,7 +1,0 @@
-drunkitten.xyz, www.drunkitten.xyz {
-    reverse_proxy drunkitten:3000
-}
-
-darrenk.drunkitten.xyz {
-    reverse_proxy darren-khaw:3000
-}
