@@ -1,0 +1,9 @@
+drunkitten.com, www.drunkitten.com {
+    encode zstd gzip
+    reverse_proxy drunkitten:3000
+}
+
+darrenk.drunkitten.com {
+    encode zstd gzip
+    reverse_proxy darren-khaw:3000
+}
