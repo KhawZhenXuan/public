@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeToggle } from "../ThemeToggle";
+import { listOriginalSongs } from "../../db/content";
+import { SongCard } from "./SongCard";
 
 export const metadata: Metadata = {
   title: "DrunKitten Production â€” Music in the Making",
@@ -11,7 +13,9 @@ function ProductionLogo({ className = "" }: { className?: string }) {
   return <span className={`themeWord wordProduction ${className}`} aria-hidden="true"><img className="logoLight" src="/dkp-word-black.png" alt=""/><img className="logoDark" src="/dkp-word-white.png" alt=""/></span>;
 }
 
-export default function ProductionPage() {
+export default async function ProductionPage() {
+  const songs = await listOriginalSongs(2);
+
   return <main className="productionPage">
     <nav className="nav" aria-label="DrunKitten Production navigation">
       <a className="productionNavBrand" href="/production" aria-label="DrunKitten Production home"><ProductionLogo/></a>
@@ -27,6 +31,8 @@ export default function ProductionPage() {
     <section className="productionVision section" id="vision"><div><p className="kicker">01 Â· The vision</p><h2>Learning the craft.<br/>Building a sound.</h2></div><div className="visionCopy"><p>DrunKitten Production is the music-production branch of DrunKitten. It documents Darren&apos;s progress as he learns how songs are written, arranged, recorded, and produced.</p><div className="visionGrid"><article><b>01</b><h3>Learn</h3><p>Develop production skills through practice.</p></article><article><b>02</b><h3>Experiment</h3><p>Explore vocals, arrangements, and new ideas.</p></article><article><b>03</b><h3>Release</h3><p>Share original music when it is ready.</p></article></div></div></section>
 
     <section className="productionCredits section" id="credits"><div className="creditHeadline"><p className="kicker">02 Â· Future credits</p><h2>Two names.<br/>One growing sound.</h2><span>COMING SOON</span></div><div className="largeCredits"><article><small>VOCALS</small><a href="https://darrenk.drunkitten.com">Darren Khaw â†—</a></article><article><small>PRODUCER</small><strong>DrunKitten Production<br/>&amp; Darren Khaw</strong></article></div></section>
+
+    <section className="originalSongs section" id="original-songs"><div className="songSectionIntro"><p className="kicker">03 · Original Songs</p><h2>Original songs<br/>and credits.</h2><p>Song titles and core credits for DrunKitten Production originals. Credits are shown in English or the song&apos;s original language.</p><a className="button primary achievementArchiveButton" href="/production/songs">View all songs →</a></div><div className="songPreviewGrid">{songs.length ? songs.map((song) => <SongCard song={song} key={song.id}/>) : <div className="songComingSoon"><span>COMING SOON</span><h3>No original songs yet.</h3><p>When the first original is ready, its title and credits will appear here.</p></div>}</div></section>
 
     <section className="productionNote section"><ProductionLogo/><div><p className="kicker">03 Â· Current status</p><h2>Still learningâ€”and that is part of the story.</h2><p>No releases are being promised yet. This page is a home for what DrunKitten Production will become as Darren&apos;s skills and sound develop.</p></div></section>
 

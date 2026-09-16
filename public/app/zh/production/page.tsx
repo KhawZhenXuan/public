@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { ThemeToggle } from "../../ThemeToggle";
+import { listOriginalSongs } from "../../../db/content";
+import { SongCard } from "../../production/SongCard";
 
 export const metadata: Metadata = { title: "DrunKitten Production â€” éŸ³ä¹åˆ›ä½œä¹‹æ—…", description: "DrunKitten çš„éŸ³ä¹åˆ¶ä½œåˆ†æ”¯ï¼Œç”± Darren Khaw å»ºç«‹ã€‚", icons: { icon: "/favicon-production-v3.png?v=3", shortcut: "/favicon-production-v3.png?v=3" } };
 
 function ProductionLogo({ className = "" }: { className?: string }) { return <span className={`themeWord wordProduction ${className}`} aria-hidden="true"><img className="logoLight" src="/dkp-word-black.png" alt=""/><img className="logoDark" src="/dkp-word-white.png" alt=""/></span>; }
 
-export default function ChineseProductionPage() {
+export default async function ChineseProductionPage() {
+  const songs = await listOriginalSongs(2);
+
   return <main className="productionPage" lang="zh-CN">
     <nav className="nav" aria-label="DrunKitten Production å¯¼èˆª"><a className="productionNavBrand" href="/zh/production" aria-label="DrunKitten Production é¦–é¡µ"><ProductionLogo/></a><div className="navLinks"><a href="/zh">DrunKitten</a><a href="/zh/se-lab">S&amp;E LAB</a><a href="https://darrenk.drunkitten.com/zh">Darren</a><ThemeToggle/><a className="languageSwitch" href="/production" lang="en">EN</a></div></nav>
 
@@ -14,6 +18,8 @@ export default function ChineseProductionPage() {
     <section className="productionVision section" id="vision"><div><p className="kicker">01 Â· æ„¿æ™¯</p><h2>å­¦ä¹ åˆ›ä½œæŠ€å·§ã€‚<br/>å»ºç«‹è‡ªå·±çš„å£°éŸ³ã€‚</h2></div><div className="visionCopy"><p>DrunKitten Production æ˜¯ DrunKitten çš„éŸ³ä¹åˆ¶ä½œåˆ†æ”¯ï¼Œè®°å½• Darren å­¦ä¹ æ­Œæ›²åˆ›ä½œã€ç¼–æ›²ã€å½•éŸ³ä¸Žåˆ¶ä½œçš„æˆé•¿è¿‡ç¨‹ã€‚</p><div className="visionGrid"><article><b>01</b><h3>å­¦ä¹ </h3><p>é€šè¿‡æŒç»­ç»ƒä¹ åŸ¹å…»éŸ³ä¹åˆ¶ä½œèƒ½åŠ›ã€‚</p></article><article><b>02</b><h3>å®žéªŒ</h3><p>æŽ¢ç´¢äººå£°ã€ç¼–æ›²ä¸Žå„ç§æ–°æƒ³æ³•ã€‚</p></article><article><b>03</b><h3>å‘å¸ƒ</h3><p>åœ¨ä½œå“å‡†å¤‡å¥½æ—¶åˆ†äº«åŽŸåˆ›éŸ³ä¹ã€‚</p></article></div></div></section>
 
     <section className="productionCredits section" id="credits"><div className="creditHeadline"><p className="kicker">02 Â· æœªæ¥ç½²å</p><h2>ä¸¤ä¸ªåå­—ã€‚<br/>ä¸€ä¸ªä¸æ–­æˆé•¿çš„å£°éŸ³ã€‚</h2><span>å³å°†æŽ¨å‡º</span></div><div className="largeCredits"><article><small>æ¼”å”±</small><a href="https://darrenk.drunkitten.com/zh">Darren Khaw â†—</a></article><article><small>åˆ¶ä½œ</small><strong>DrunKitten Production<br/>&amp; Darren Khaw</strong></article></div></section>
+
+    <section className="originalSongs section" id="original-songs"><div className="songSectionIntro"><p className="kicker">03 · Original Songs</p><h2>Original songs<br/>and credits.</h2><p>歌曲资料将保留英文或歌曲原本语言，方便中英文页面一致显示。</p><a className="button primary achievementArchiveButton" href="/zh/production/songs">View all songs →</a></div><div className="songPreviewGrid">{songs.length ? songs.map((song) => <SongCard song={song} key={song.id}/>) : <div className="songComingSoon"><span>COMING SOON</span><h3>No original songs yet.</h3><p>第一首原创歌曲准备好后，歌曲名称与主要署名会显示在这里。</p></div>}</div></section>
 
     <section className="productionNote section"><ProductionLogo/><div><p className="kicker">03 Â· å½“å‰çŠ¶æ€</p><h2>ä»åœ¨å­¦ä¹ â€”â€”è€Œè¿™æ­£æ˜¯æ•…äº‹çš„ä¸€éƒ¨åˆ†ã€‚</h2><p>ç›®å‰è¿˜ä¸ä¼šæ‰¿è¯ºä»»ä½•å‘å¸ƒæ—¥æœŸã€‚è¿™ä¸ªé¡µé¢è®°å½• DrunKitten Production éšç€ Darren çš„æŠ€å·§ä¸Žå£°éŸ³ä¸æ–­æˆé•¿ï¼Œé€æ­¥æˆä¸ºæœªæ¥çš„æ¨¡æ ·ã€‚</p></div></section>
 

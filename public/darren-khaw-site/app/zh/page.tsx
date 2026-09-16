@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { AchievementCard } from "../AchievementCard";
 import { ThemeToggle } from "../ThemeToggle";
+import { listAchievements } from "../../db/content";
 
 export const metadata: Metadata = {
   title: "Darren Khaw â€” å­¦ç”Ÿä¸ªäººä½œå“é›†",
@@ -9,12 +11,15 @@ export const metadata: Metadata = {
 
 function DarrenLogo({ className = "" }: { className?: string }) { return <span className={`themeWord wordDarren ${className}`} aria-hidden="true"><img className="logoLight" src="/darren-khaw-black.png" alt=""/><img className="logoDark" src="/darren-khaw-white.png" alt=""/></span>; }
 
-export default function DarrenChinesePage(){return <main className="darrenPage" lang="zh-CN">
+export default async function DarrenChinesePage(){
+  const [featuredAchievement] = await listAchievements();
+
+return <main className="darrenPage" lang="zh-CN">
   <nav className="nav darrenStandaloneNav" aria-label="Darren Khaw å¯¼èˆª"><a className="darrenNavBrand" href="/zh" aria-label="Darren Khaw é¦–é¡µ"><DarrenLogo/></a><div className="navLinks"><ThemeToggle/><a className="languageSwitch" href="/" lang="en">EN</a></div></nav>
 
   <section className="darrenHero" id="top"><div className="darrenGrid" aria-hidden="true"/><div className="darrenHeroCopy"><p className="eyebrow"><span/> å­¦ç”Ÿ</p><DarrenLogo className="darrenHeroLogo"/><h1>å¯»æ‰¾è‡ªå·±çš„å£°éŸ³ã€‚<br/><em>ä¸€æ­¥ä¸€æ­¥ï¼Œèµ°ä¸Šæ¯ä¸ªèˆžå°ã€‚</em></h1><p>æˆ‘æ˜¯ Darren Khawï¼Œä¸€åæ¥è‡ªé©¬æ¥è¥¿äºšçš„ 18 å²å­¦ç”Ÿã€‚æˆ‘å‚åŠ æ­Œå”±æ¯”èµ›ï¼Œå¹¶åœ¨æ¯ä¸€æ¬¡è¡¨æ¼”ä¸­ç»§ç»­æˆé•¿ã€‚</p><div className="heroActions"><a className="button primary" href="#achievements">æŸ¥çœ‹æˆ‘çš„æˆå°± â†“</a></div></div><div className="darrenIdentityCard"><img className="identityPhoto" src="/darren-khaw-profile.png" alt="Darren Khaw åœ¨èˆžå°ä¸Šæ¼”å”±"/><h2>Darren Khaw</h2><div className="identityNames"><p><span>å…¨å</span>Khaw Zhen Xuan</p><p><span>ä¸­æ–‡å§“å</span>è®¸æŒ¯è½©</p></div><p>é©¬æ¥è¥¿äºš Â· 18 å² Â· å­¦ç”Ÿ</p><div className="identityStatus"><i/> ä¸æ–­å­¦ä¹ ä¸Žæˆé•¿</div></div></section>
 
-  <section className="darrenAchievements section" id="achievements"><div className="achievementIntro"><p className="kicker">01 Â· æˆå°±</p><h2>æ­Œå”±æ¯”èµ›<br/>æˆå°±</h2><p>è®°å½•æˆ‘åœ¨èˆžå°ä¸Šçš„æ¯”èµ›ç»åŽ†ã€è¡¨æ¼”ä¸Žæˆç»©ã€‚</p><a className="button primary achievementArchiveButton" href="/zh/achievements">æŸ¥çœ‹æ‰€æœ‰æˆå°± â†’</a></div><article className="featuredAchievement"><div className="achievementYear">2025</div><div className="achievementCopy"><p className="achievementType">å›½é™…ä¸­æ–‡æ­Œæ›²å¤§èµ›</p><h3>2025å¹´æ–‡åŒ–ä¸­å›½Â·æ°´ç«‹æ–¹æ¯ä¸­æ–‡æ­Œæ›²å¤§èµ›</h3><p>å‚åŠ 2025å¹´æ–‡åŒ–ä¸­å›½Â·æ°´ç«‹æ–¹æ¯ä¸­æ–‡æ­Œæ›²å¤§èµ›ï¼Œè£èŽ·<strong>å…¨çƒç¬¬19å</strong>åŠ<strong>é“œå¥–</strong>ã€‚</p><div className="achievementResults"><span><small>å…¨çƒæŽ’å</small><b>ç¬¬19å</b></span><span><small>å¥–é¡¹</small><b>é“œå¥–</b></span></div></div><div className="achievementGallery"><figure className="achievementWide"><img src="/water-cube-2025-stage.jpeg" alt="Darren Khaw å‚ä¸Ž2025å¹´æ–‡åŒ–ä¸­å›½Â·æ°´ç«‹æ–¹æ¯ä¸­æ–‡æ­Œæ›²å¤§èµ›"/></figure><figure><img src="/water-cube-2025-trophy.jpeg" alt="2025å¹´æ–‡åŒ–ä¸­å›½Â·æ°´ç«‹æ–¹æ¯ä¸­æ–‡æ­Œæ›²å¤§èµ›é“œå¥–å¥–æ¯"/></figure><figure><img src="/water-cube-2025-winner.jpeg" alt="Darren Khaw æ‰‹æŒé“œå¥–å¥–æ¯"/></figure></div></article></section>
+  <section className="darrenAchievements section" id="achievements"><div className="achievementIntro"><p className="kicker">01 Â· æˆå°±</p><h2>æ­Œå”±æ¯”èµ›<br/>æˆå°±</h2><p>è®°å½•æˆ‘åœ¨èˆžå°ä¸Šçš„æ¯”èµ›ç»åŽ†ã€è¡¨æ¼”ä¸Žæˆç»©ã€‚</p><a className="button primary achievementArchiveButton" href="/zh/achievements">æŸ¥çœ‹æ‰€æœ‰æˆå°± â†’</a></div>{featuredAchievement && <AchievementCard achievement={featuredAchievement} locale="zh" wideFirstImage/>}</section>
 
   <section className="darrenAbout section" id="about-darren"><div><p className="kicker">02 Â· å…³äºŽæˆ‘</p><h2>ä»ŽéŸ³ä¹ä¸­å­¦ä¹ ã€‚<br/>åœ¨è¡¨æ¼”ä¸­æˆé•¿ã€‚</h2></div><div><p className="darrenLead">å”±æ­Œæ˜¯æˆ‘ç”Ÿæ´»ä¸­é‡è¦çš„ä¸€éƒ¨åˆ†ã€‚æˆ‘å‚åŠ æ¯”èµ›æ¥æŒ‘æˆ˜è‡ªå·±ã€ç´¯ç§¯èˆžå°ç»éªŒï¼Œå¹¶æŒç»­æå‡è‡ªå·±ã€‚è¿™ä¸ªä½œå“é›†è®°å½•äº†æˆ‘çš„æˆé•¿è¿‡ç¨‹ä¸Žæ²¿é€”çš„æ¯ä¸ªé‡Œç¨‹ç¢‘ã€‚</p></div></section>
 
